@@ -1,7 +1,7 @@
 import './App.css';
 import * as React from 'react';
 import { Card, NextUIProvider } from '@nextui-org/react';
-import { Container, Button, Input, Spacer, Text } from "@nextui-org/react";
+import { Container, Button, Input, Spacer, Text, Link, Row } from "@nextui-org/react";
 
 function loginForm() {
   return (
@@ -10,8 +10,10 @@ function loginForm() {
         <section id='loginForm'>
             <form>
               <Card variant='shadow' css={{
-                background: 'rgba(39, 39, 39, 0.1)',
-                backdropFilter: 'blur(20px)'}}>
+                background: 'rgba(39, 39, 39, 0.20)',
+                backdropFilter: 'blur(15px)',
+                boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )',
+                borderRadius: '10px'}}>
                 <Card.Body>
                   <Text h2 weight='hairline' align='center'>Entrar</Text>
                   <Spacer y={-0.55}></Spacer>
@@ -25,12 +27,16 @@ function loginForm() {
                 required={true}
                 size='xl'
                 width='330px'
-                color='primary'
                 clearable={true}
-                color={{background:'red'}}
-                >
+                bordered
+                color='primary'
+                css={{backdropFilter: 'blur(-40px)'}}>
                    
                 </Input>
+                <Spacer y={0.30}></Spacer>
+                <Link href='#' weight='bold' css={{marginLeft: '59%'}}>
+                  Esqueceu a senha?
+                </Link>
 
                 <Spacer y={0.55}></Spacer>
 
@@ -41,10 +47,14 @@ function loginForm() {
                 size='xl'
                 width='330px'
                 animated={true}
+                bordered
                 color='primary'> 
                 </Input.Password>
                 <Spacer y={0.55}></Spacer>
-                <Button size='xl'>Entrar</Button>
+                <Button color='primary' size='xl'>Entrar</Button>
+                <Spacer y={0.55}></Spacer>
+                <Text weight='hairline' color='white' align='center'>Não possui conta? <Link weight='bold'>Crie uma agora!</Link></Text>
+                
                 </Card.Body>
                 </Card>
             </form> 
