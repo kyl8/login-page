@@ -3,13 +3,11 @@ import { Container, Button, Input, Spacer, Text, Card, Link} from "@nextui-org/r
 import { Link as LinkRouter } from 'react-router-dom';
 
 
-
-
-function ForgotPassword() {
+function Painel() {
     return (
       <div>
       <Container display='flex' alignItems='center' justify='center' css={{minHeight:'100vh'}}>
-          <section id='forgotPassword'>
+          <section id='loginForm'>
               <form>
                 <Card variant='shadow' css={{
                   background: 'rgba(39, 39, 39, 0.20)',
@@ -18,16 +16,16 @@ function ForgotPassword() {
                   borderRadius: '10px'}}>
                   <Card.Body>
 
-                    <Text h2 weight='hairline' align='center'>Recuperação</Text>
+                    <Text h2 weight='hairline' align='center'>Entrar</Text>
                     <Spacer y={-0.55}></Spacer>
                     <Text h5 weight='hairline' align='center' css={{opacity: '60%'}}> 
                     Para continuar preencha suas informações.
                     </Text>
-                    <Spacer y={0.5}></Spacer>
+                    <Spacer y={1}></Spacer>
 
                   <Input
                   type='text'
-                  placeholder='E-mail'
+                  placeholder='Usuário'
                   required={true}
                   size='xl'
                   width='330px'
@@ -37,17 +35,33 @@ function ForgotPassword() {
                   css={{bg: '$white'}}>
                   </Input>
 
+                  <Spacer y={0.30}></Spacer>
+                  <Link weight='bold' css={{marginLeft: '59%'}}>
+                    <LinkRouter to='/forgotpassword'>Esqueceu a senha?</LinkRouter>
+                  </Link>
                   <Spacer y={0.55}></Spacer>
-                  <Button color='primary' size='xl' auto>
-                    Recuperar
-                    </Button>
+  
+                  <Input.Password
+                  type='password'
+                  placeholder='Senha'
+                  required={true}
+                  size='xl'
+                  width='330px'
+                  animated={true}
+                  bordered
+                  color='primary'
+                  css={{bg: '$white'}}> 
+                  </Input.Password>
+
                   <Spacer y={0.55}></Spacer>
-                  <Text weight='hairline' color='white' align='center'>
-                  Não possui conta?
-                  <Link weight='bold' css={{marginLeft: '0.5vh'}}>
+                  <LinkRouter to='/painel'><Button color='primary' size='xl'>Entrar</Button></LinkRouter>
+                  <Spacer y={0.55}></Spacer>
+
+                  <Text weight='hairline' color='white' align='center'>Não possui conta?</Text>
+                  <Link weight='bold'>
                     <LinkRouter to='/register'>Crie uma agora!</LinkRouter>
                   </Link>
-                  </Text>
+
                   </Card.Body>
                   </Card>
               </form> 
@@ -57,4 +71,4 @@ function ForgotPassword() {
     );
   } 
 
-export default ForgotPassword;
+export default Painel; 
