@@ -1,10 +1,42 @@
 import * as React from 'react';
-import { Container, Button, Input, Spacer, Text, Card, Link} from "@nextui-org/react";
+import { Container, Button, Input, Spacer, Text, Card, Link, Modal, Fragment} from "@nextui-org/react";
 import { Link as LinkRouter } from 'react-router-dom';
-import { Avatar } from '@nextui-org/react';
-
+import { useState } from 'react';
+import axios from 'axios';
 
 function LoginForm() {
+
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [visible, setVisible] = useState(false);
+
+    const handleLogin = async (e) =>  {
+
+      try {
+        const response = await axios.post('http://localhost:3000/login',
+        JSON.stringify({login, password}),
+        {
+          headers: { 'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'}
+        }
+      );
+      console.log(login, password);
+      setVisible(true);
+      setError('Logado com sucesso.');
+      } catch (error) {
+        if (!error?.response) {
+          setVisible(true);
+          setError('Erro ao acessar o servidor.');
+        } else if (error.response.status == 401) {
+          setVisible(true);
+          setError('Usuário ou senha inválidos.');
+        }
+   
+      }
+      
+    }
+
     return (
       <div>
       <Container display='flex' alignItems='center' justify='center' css={{minHeight:'100vh'}}>
@@ -25,15 +57,16 @@ function LoginForm() {
                     <Spacer y={1}></Spacer>
 
                   <Input
-                  type='text'
-                  placeholder='Usuário'
-                  required={true}
-                  size='xl'
-                  width='330px'
-                  clearable={true}
-                  bordered
-                  color='primary'
-                  css={{bg: '$white'}}>
+                    type='text'
+                    placeholder='Usuário'
+                    required={true}
+                    size='xl'
+                    width='330px'
+                    clearable={true}
+                    bordered
+                    color='primary'
+                    onChange={(e) => setLogin(e.target.value)}
+                    css={{bg: '$white'}}>
                   </Input>
 
                   <Spacer y={0.30}></Spacer>
@@ -43,19 +76,21 @@ function LoginForm() {
                   <Spacer y={0.55}></Spacer>
   
                   <Input.Password
-                  type='password'
-                  placeholder='Senha'
-                  required={true}
-                  size='xl'
-                  width='330px'
-                  animated={true}
-                  bordered
-                  color='primary'
-                  css={{bg: '$white'}}> 
+                    type='password'
+                    placeholder='Senha'
+                    required={true}
+                    size='xl'
+                    width='330px'
+                    animated={true}
+                    bordered
+                    color='primary'
+                    onChange={(e) => setPassword(e.target.value)}
+                    css={{bg: '$white'}}> 
                   </Input.Password>
 
                   <Spacer y={0.55}></Spacer>
-                  <Button color='primary' size='xl' auto>
+                  <Button color='primary' size='xl' auto 
+                  onPress={(e) => handleLogin(e)}>
                     Entrar
                     </Button>
                   <Spacer y={0.55}></Spacer>
@@ -65,14 +100,19 @@ function LoginForm() {
                     <LinkRouter to='/register'>Crie uma agora!</LinkRouter>
                   </Link>
                   </Text>
-                  
-
                   </Card.Body>
                   </Card>
-              </form> 
+              </form>
+
+              <Modal closeButton blur open={visible} onClose={() => {setVisible(false);}}>
+              <Modal.Body css={{margin: 'auto'}}>{error}</Modal.Body>
+              <Modal.Footer></Modal.Footer>
+              </Modal>
+
           </section>
       </Container>
     </div>
+    
     );
   } 
 
