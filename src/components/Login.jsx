@@ -21,9 +21,10 @@ function LoginForm() {
                     'Access-Control-Allow-Origin': '*'}
         }
       );
-      console.log(login, password);
-      setVisible(true);
-      setError('Logado com sucesso.');
+        console.log(login, password);
+        setVisible(true);
+        setError('Logado com sucesso.');
+
       } catch (error) {
         if (!error?.response) {
           setVisible(true);

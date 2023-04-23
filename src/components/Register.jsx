@@ -1,8 +1,43 @@
 import * as React from 'react';
-import { Container, Button, Input, Spacer, Text, Card, Link} from "@nextui-org/react";
-import { Link as LinkRouter } from 'react-router-dom';
+import { Container, Button, Input, Spacer, Text, Card, Link, Modal} from "@nextui-org/react";
+import { useState } from 'react';
+import axios from 'axios';
 
 function Register() {
+
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [date, setDate] = useState('');
+  const [error, setError] = useState('');
+  const [visible, setVisible] = useState(false);
+
+  const handleRegister = async (e) =>  {
+    try {
+      const response = await axios.post('http://localhost:3000/register',
+      JSON.stringify({login, password, confirmPassword, email, date}),
+      {
+        headers: { 'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': '*'}
+      }
+    );
+      console.log(login, password, confirmPassword, email, date);
+      setVisible(true);
+      setError('Registrado com sucesso!');
+
+    } catch (error) {
+      if (!error?.response) {
+        setVisible(true);
+        setError('Erro ao acessar o servidor.');
+      } else if (error.response.status == 401) {
+      setVisible(true);
+      setError('Senhas não são iguais.');
+    }
+    }
+    
+  }
+
     return (
       <div>
       <Container display='flex' alignItems='center' justify='center' css={{minHeight:'100vh'}}>
@@ -31,6 +66,7 @@ function Register() {
                   clearable={true}
                   bordered
                   color='primary'
+                  onChange={(e) => setLogin(e.target.value)}
                   css={{bg: '$white'}}>
                   </Input>
 
@@ -45,6 +81,7 @@ function Register() {
                   animated={true}
                   bordered
                   color='primary'
+                  onChange={(e) => setPassword(e.target.value)}
                   css={{bg: '$white'}}>
                   </Input.Password>
 
@@ -59,6 +96,7 @@ function Register() {
                   animated={true}
                   bordered
                   color='primary'
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   css={{bg: '$white'}}> 
                   </Input.Password>
 
@@ -73,6 +111,7 @@ function Register() {
                   clearable={true}
                   bordered
                   color='primary'
+                  onChange={(e) => setEmail(e.target.value)}
                   css={{bg: '$white'}}>
                   </Input>
 
@@ -85,19 +124,24 @@ function Register() {
                   width='330px'
                   bordered
                   color='primary'
+                  onChange={(e) => setDate(e.target.value)}
                   css={{bg: '$white'}}>
                   </Input>
 
 
                   <Spacer y={0.55}></Spacer>
 
-                  <Button color='primary' size='lg' auto>
+                  <Button color='primary' size='lg' auto onPress={(e) => handleRegister(e)}>
                     Registrar
                     </Button>
 
                   </Card.Body>
                   </Card>
               </form> 
+              <Modal closeButton blur open={visible} onClose={() => {setVisible(false);}}>
+              <Modal.Body css={{margin: 'auto'}}>{error}</Modal.Body>
+              <Modal.Footer></Modal.Footer>
+              </Modal>
           </section>
       </Container>
     </div>
