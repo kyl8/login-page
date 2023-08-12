@@ -1,15 +1,20 @@
 import * as React from 'react';
-import { Container, Button, Input, Spacer, Text, Card, Link, Modal} from "@nextui-org/react";
+import { Container, Button, Input, Spacer, Text, Card, Modal, Dropdown} from "@nextui-org/react";
 import { useState } from 'react';
 import axios from 'axios';
 
 function Register() {
+
+  const geraEstados = (props) => {
+    const dTag = `<Dropdown.Menu>`
+  }
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
+  const [estado, setEstado] = useState('');
   const [error, setError] = useState('');
   const [visible, setVisible] = useState(false);
 
@@ -130,7 +135,15 @@ function Register() {
 
 
                   <Spacer y={0.55}></Spacer>
+          
+                  <Dropdown>
+                        <Dropdown.Button color='white'>Estado</Dropdown.Button>
+                        <Dropdown.Menu aria-label="Estado">
+                          <Dropdown.Item> New file</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
 
+                  <Spacer y={0.55}></Spacer>
                   <Button color='primary' size='lg' auto onPress={(e) => handleRegister(e)}>
                     Registrar
                     </Button>
