@@ -1,10 +1,7 @@
 
 # Desenvolvimento WEB - 4
 
-Simple project for the WEB Development subject of the fourth year of the Instituto Federal de São Paulo, Campus Cubatão.
-
-The project will be developed throughout the year. And it will be used as a way to learn ReactJS, Javascript and other new technologies for me.
-
+Simple old school project for the WEB Development subject of the fourth year of the Instituto Federal de São Paulo, Campus Cubatão.
 
 ## How to run
 
